@@ -34,7 +34,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               print('Selected: $value');
             },
             itemBuilder: (BuildContext context) {
-              return <String>['Option 1', 'Option 2', 'Option 3'].map((
+              return <String>['Option 1', 'Option 2', 'Option 4'].map((
                   String choice){
                 return PopupMenuItem(
                   value: choice,
