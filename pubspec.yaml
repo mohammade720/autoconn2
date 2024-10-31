@@ -43,6 +43,7 @@ dev_dependencies:
   flutter_material_symbols: ^0.0.4
   material_symbols_icons: ^4.2784.0
   image_picker: ^0.8.7+4
+  dotted_border: ^2.1.0
 
 
 
