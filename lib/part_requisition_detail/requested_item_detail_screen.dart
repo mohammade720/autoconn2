@@ -1,4 +1,5 @@
 
+import 'package:autoconn2/part_requisition_detail/add_quote_screen.dart';
 import 'package:autoconn2/product/Product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
@@ -255,7 +256,12 @@ Widget buildPartItemTile( BuildContext context, PartItem item) {
                 Text(' ${item.buyingChoice}', style: Theme.of(context).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.w400)),
                 const Spacer(),
                 ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AddQuoteScreen(partItem: item)),
+                    );
+                  },
                   icon: const Icon(Symbols.add, size: 20, color: Color(0xFF40C282)),
                   label: const Text('Add Quote', style: TextStyle(fontSize: 10)),
                   style: ElevatedButton.styleFrom(
