@@ -88,7 +88,7 @@ Widget buildOEMCard(BuildContext context) {
     color: Colors.white,
     child: Column(
       children: [
-        const SizedBox(height: 14),
+       const SizedBox(height: 14),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
@@ -181,7 +181,7 @@ Widget buildMediaAttachments(BuildContext context) {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(width: 75),
+                const Spacer(),
                 GestureDetector(
                   onTap: () {},
                   child: const Icon(Symbols.description,size: 20),
@@ -191,13 +191,64 @@ Widget buildMediaAttachments(BuildContext context) {
                   onTap: () {},
                   child: const Icon(Symbols.mic,size: 20),
                 ),
+                const SizedBox(
+                  height: 24,
+                  child: VerticalDivider(
+                    width: 12,
+                    thickness: 1.5,
+                    color: Color(0xFFA1A1A1),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                GestureDetector(
+                  onTap: () {},
+                  child: const Icon(Symbols.video_library,size: 20),
+                ),
+                const SizedBox(width: 12),
+                GestureDetector(
+                  onTap: () {},
+                  child: const Icon(Symbols.video_camera_back_add,size: 20),
+                ),
+                const SizedBox(
+                  height: 24,
+                  child: VerticalDivider(
+                    width: 11,
+                    thickness: 1.5,
+                    color: Color(0xFFA1A1A1),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                GestureDetector(
+                  onTap: () {},
+                  child: const Icon(Symbols.photo_library,size: 20),
+                ),
+                const SizedBox(width: 12),
+                GestureDetector(
+                  onTap: () {},
+                  child: const Icon(Symbols.photo_camera,size: 20),
+                ),
               ],
             ),
           ),
-          VerticalDivider(
-            width: 10,
-            thickness: 1,
-            color: Colors.red,
+          const SizedBox(height: 28),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 65),
+            child: Column(
+              children: [
+                Text(
+                  'Photo, Videos, And Documents',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  'You Can Upload up to 10 files of the following types: Image, Video, Audio, PDF Excel, and Docx. Each file must be 5MB or less',
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontSize: 10,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
           ),
         ],
       ),
