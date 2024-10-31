@@ -1,5 +1,6 @@
 import 'package:autoconn2/partitem/part_item_model.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
 class AddQuoteScreen extends StatefulWidget {
@@ -157,27 +158,46 @@ Widget buildOEMCard(BuildContext context) {
 }
 
 Widget buildMediaAttachments(BuildContext context) {
-  return Container(
-    height: 142,
-    decoration: BoxDecoration(
+  return DottedBorder(
+    color: const Color(0xFFA1A1A1),
+    borderType: BorderType.RRect,
+    dashPattern: const [6, 3],
+    radius: const Radius.circular(4),
+    strokeWidth: 1,
+    child: Container(
+      height: 142,
       color: const Color(0xFFF9F9F9),
-      border: Border.all(
-        color: const Color(0xFFA1A1A1),
-        width: 1,
-        style: BorderStyle.solid,
-      ),
-      borderRadius: BorderRadius.circular(4),
-    ),
-    child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
+      child: Column(
         children: [
-          Text(
-            'Attachments',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
+          const SizedBox(height: 16),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              children: [
+                Text(
+                  'Attachments',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
+                const SizedBox(width: 75),
+                GestureDetector(
+                  onTap: () {},
+                  child: const Icon(Symbols.description,size: 20),
+                ),
+                const SizedBox(width: 12),
+                GestureDetector(
+                  onTap: () {},
+                  child: const Icon(Symbols.mic,size: 20),
+                ),
+              ],
+            ),
+          ),
+          VerticalDivider(
+            width: 10,
+            thickness: 1,
+            color: Colors.red,
           ),
         ],
       ),
@@ -191,7 +211,7 @@ Widget buildTextField(String label, {IconData? prefixIcon}) {
     child: TextFormField(
       decoration: InputDecoration(
         labelText: label,
-        fillColor: Color(0xFFF9F9F9),
+        fillColor: const Color(0xFFF9F9F9),
         filled: true,
         enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(
