@@ -17,6 +17,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+       scrolledUnderElevation: 0,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -71,9 +72,26 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Column(
             children: [
-              const SizedBox(height: 24
+              const SizedBox(height: 24),
+            buildDetailCard(context, widget.partItem),
+              const SizedBox(height: 36),
+              SizedBox(
+                width: 328,
+                height: 36,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFEAB308),
+                  ),
+                  child: Text(
+                    'Submit',
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      color: Colors.white,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
               ),
-            buildDetailCard(context),
             ],
           ),
         ),
@@ -82,78 +100,82 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
   }
 }
 
-Widget buildDetailCard(BuildContext context) {
-  return Card(
-    elevation: 1,
-    color: Colors.white,
-    child: Column(
-      children: [
-       const SizedBox(height: 14),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            children: [
-              Text(
-                'OEM',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const Spacer(),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  'Remove',
-                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    fontSize: 8,
-                    color: Theme.of(context).colorScheme.error,
+Widget buildDetailCard(BuildContext context, PartItem partItem) {
+  return Column(
+    children: partItem.buyingChoice.map((choice) {
+      return Card(
+        elevation: 1,
+        color: Colors.white,
+        child: Column(
+          children: [
+           const SizedBox(height: 14),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  Text(
+                    choice,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Remove',
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        fontSize: 8,
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  const SizedBox(height: 22),
+                  Expanded(child: buildTextField('Rate', prefixIcon: Symbols.asterisk)),
+                  const SizedBox(width: 16),
+                  Expanded(child: buildTextField('Quantity', prefixIcon: Symbols.asterisk)),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  Expanded(child: buildTextField('Warranty Number')),
+                  const SizedBox(width: 16),
+                  Expanded(child: buildTextField('Days')),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: buildTextField('Delivery Date', prefixIcon: Symbols.calendar_month),
+            ),
+            const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: buildTextField('Notes'),
+            ),
+            SizedBox(height: 24),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: buildMediaAttachments(context),
+            ),
+            const SizedBox(height: 16),
+          ],
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            children: [
-              const SizedBox(height: 22),
-              Expanded(child: buildTextField('Rate', prefixIcon: Symbols.asterisk)),
-              const SizedBox(width: 16),
-              Expanded(child: buildTextField('Quantity', prefixIcon: Symbols.asterisk)),
-            ],
-          ),
-        ),
-        const SizedBox(height: 16),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            children: [
-              Expanded(child: buildTextField('Warranty Number')),
-              const SizedBox(width: 16),
-              Expanded(child: buildTextField('Days')),
-            ],
-          ),
-        ),
-        const SizedBox(height: 16),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: buildTextField('Delivery Date', prefixIcon: Symbols.calendar_month),
-        ),
-        const SizedBox(height: 16),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: buildTextField('Notes'),
-        ),
-        SizedBox(height: 24),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: buildMediaAttachments(context),
-        ),
-        const SizedBox(height: 16),
-      ],
-    ),
+      );
+    }).toList(),
   );
 }
 
@@ -285,3 +307,32 @@ Widget buildTextField(String label, {IconData? prefixIcon}) {
     ),
   );
 }
+
+/*
+Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: SizedBox(
+                      width: 328,
+                      height: 36,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MyOTPScreen()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Color(0xFFEAB308),
+                        ),
+                        child: const Text(
+                            'GET OTP',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+ */

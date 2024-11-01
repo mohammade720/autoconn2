@@ -61,6 +61,30 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             buildProductInfoCard(context, widget.product),
             const SizedBox(height: 16),
             buildPartRequisitionCard(context, widget.product),
+            const SizedBox(height: 36),
+           Row(
+             children: [
+               Spacer(),
+               Padding(
+                 padding: const EdgeInsets.only(right: 16),
+                 child: SizedBox(
+                   height: 36,
+                   child: ElevatedButton(
+                     onPressed: () {},
+                     style: ElevatedButton.styleFrom(
+                       backgroundColor: const Color(0xFFDB0127),
+                     ),
+                     child: Text(
+                       'Reject Quotation',
+                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                         color: Colors.white,
+                       ),
+                     ),
+                   ),
+                 ),
+               ),
+             ],
+           ),
           ],
         ),
       ),
@@ -259,44 +283,60 @@ Widget buildPartItemTile( BuildContext context, PartItem item, product) {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Container(
           height: 36,
+          width: double.infinity,
           decoration: BoxDecoration(
             color: const Color(0xFFF8F6F4),
             borderRadius: BorderRadius.circular(4),
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Text('Buying Choice:', style: Theme.of(context).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.bold)),
-                    Text(buyingChoiceText, style: Theme.of(context).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.w400)),
-                  ],
-                ),
-                SizedBox(
-                  height: 18,
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => AddQuoteScreen(partItem: item)),
-                      );
-                    },
-                    icon: const Icon(Symbols.add, size: 20, color: Color(0xFF40C282)),
-                    label: const Text('Add Quote', style: TextStyle(fontSize: 10)),
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      backgroundColor: Colors.white,
-                      foregroundColor: const Color(0xFF40C282),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4),
-                        side: const BorderSide(color: Color(0xFF40C282), width: 0.3),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                          'Buying Choice:',
+                          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                          ),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                          buyingChoiceText,
+                          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              fontWeight: FontWeight.w400
+                          ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 12),
+                  SizedBox(
+                    height: 18,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => AddQuoteScreen(partItem: item)),
+                        );
+                      },
+                      icon: const Icon(Symbols.add, size: 20, color: Color(0xFF40C282)),
+                      label: const Text('Add Quote', style: TextStyle(fontSize: 10)),
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        backgroundColor: Colors.white,
+                        foregroundColor: const Color(0xFF40C282),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                          side: const BorderSide(color: Color(0xFF40C282), width: 0.3),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
