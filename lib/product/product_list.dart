@@ -1,5 +1,5 @@
 
-  import 'package:autoconn2/part_requisition_detail/requested_item_detail_screen.dart';
+  import 'package:autoconn2/part_requisition_detail/product_detail_screen.dart';
   import 'package:autoconn2/product/Product_model.dart';
   import 'package:material_symbols_icons/material_symbols_icons.dart';
   import 'package:flutter/material.dart';

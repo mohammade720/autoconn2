@@ -4,7 +4,7 @@ class PartItem {
   final String status;
   final int partId;
   final String notes;
-  final String buyingChoice;
+  List<String> buyingChoice;
 
   PartItem({
     required this.name,

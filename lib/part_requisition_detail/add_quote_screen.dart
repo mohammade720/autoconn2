@@ -73,7 +73,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
             children: [
               const SizedBox(height: 24
               ),
-            buildOEMCard(context),
+            buildDetailCard(context),
             ],
           ),
         ),
@@ -82,7 +82,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
   }
 }
 
-Widget buildOEMCard(BuildContext context) {
+Widget buildDetailCard(BuildContext context) {
   return Card(
     elevation: 1,
     color: Colors.white,

@@ -8,7 +8,6 @@ import '../utils/utils_methods.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final Product product;
- // final PartItem item;
 
   const ProductDetailScreen({super.key, required this.product});
 
@@ -193,6 +192,7 @@ Widget buildPartRequisitionCard(BuildContext context, Product product) {
 }
 
 Widget buildPartItemTile( BuildContext context, PartItem item, product) {
+  String buyingChoiceText = item.buyingChoice.join(', ');
   return Column(
     children: [
       Padding(
@@ -266,11 +266,15 @@ Widget buildPartItemTile( BuildContext context, PartItem item, product) {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Buying Choice:', style: Theme.of(context).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.bold)),
-                Text(' ${item.buyingChoice}', style: Theme.of(context).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.w400)),
-                const Spacer(),
-                Container(
+                Row(
+                  children: [
+                    Text('Buying Choice:', style: Theme.of(context).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.bold)),
+                    Text(buyingChoiceText, style: Theme.of(context).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.w400)),
+                  ],
+                ),
+                SizedBox(
                   height: 18,
                   child: ElevatedButton.icon(
                     onPressed: () {
