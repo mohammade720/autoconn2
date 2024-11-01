@@ -76,7 +76,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
             buildDetailCard(context, widget.partItem),
               const SizedBox(height: 36),
               SizedBox(
-                width: 328,
+                width: MediaQuery.of(context).size.width - 32,
                 height: 36,
                 child: ElevatedButton(
                   onPressed: () {},
@@ -308,31 +308,3 @@ Widget buildTextField(String label, {IconData? prefixIcon}) {
   );
 }
 
-/*
-Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: SizedBox(
-                      width: 328,
-                      height: 36,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => MyOTPScreen()),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: Color(0xFFEAB308),
-                        ),
-                        child: const Text(
-                            'GET OTP',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
- */
