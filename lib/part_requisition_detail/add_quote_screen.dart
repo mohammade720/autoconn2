@@ -1,6 +1,7 @@
 import 'package:autoconn2/partitem/part_item_model.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 class AddQuoteScreen extends StatefulWidget {
@@ -13,19 +14,37 @@ class AddQuoteScreen extends StatefulWidget {
 }
 
 class _AddQuoteScreenState extends State<AddQuoteScreen> {
+  List<PlatformFile> selectedFiles = [];
+
+
+  Future<void> _pickFiles() async {
+    final result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      allowedExtensions: ['jpg', 'pdf', 'doc', 'mp4', 'mp3'],
+      type: FileType.custom,
+    );
+
+    if (result != null) {
+      setState(() {
+        selectedFiles = result.files;
+      });
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-       scrolledUnderElevation: 0,
+        scrolledUnderElevation: 0,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Add Quote',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 4),
             Row(
@@ -34,14 +53,14 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
                 Text(
                   widget.partItem.name,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
                 Text(
                   'Req. QTY',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
               ],
             ),
@@ -51,14 +70,14 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
                 Text(
                   '${widget.partItem.partId}',
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    fontSize: 10,
-                  ),
+                        fontSize: 10,
+                      ),
                 ),
                 Text(
                   '${widget.partItem.quantity} UNT',
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    fontSize: 10,
-                  ),
+                        fontSize: 10,
+                      ),
                 ),
               ],
             ),
@@ -73,7 +92,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
           child: Column(
             children: [
               const SizedBox(height: 24),
-            buildDetailCard(context, widget.partItem),
+              buildDetailCard(context, widget.partItem,selectedFiles, _pickFiles),
               const SizedBox(height: 36),
               SizedBox(
                 width: MediaQuery.of(context).size.width - 32,
@@ -86,9 +105,9 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
                   child: Text(
                     'Submit',
                     style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
+                          color: Colors.white,
+                          fontSize: 14,
+                        ),
                   ),
                 ),
               ),
@@ -100,7 +119,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
   }
 }
 
-Widget buildDetailCard(BuildContext context, PartItem partItem) {
+Widget buildDetailCard(BuildContext context, PartItem partItem,List<PlatformFile> selectedFiles, Future<void> Function() onPickFiles) {
   return Column(
     children: partItem.buyingChoice.map((choice) {
       return Card(
@@ -108,7 +127,7 @@ Widget buildDetailCard(BuildContext context, PartItem partItem) {
         color: Colors.white,
         child: Column(
           children: [
-           const SizedBox(height: 14),
+            const SizedBox(height: 14),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
@@ -116,9 +135,9 @@ Widget buildDetailCard(BuildContext context, PartItem partItem) {
                   Text(
                     choice,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   const Spacer(),
                   TextButton(
@@ -126,9 +145,9 @@ Widget buildDetailCard(BuildContext context, PartItem partItem) {
                     child: Text(
                       'Remove',
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        fontSize: 8,
-                        color: Theme.of(context).colorScheme.error,
-                      ),
+                            fontSize: 8,
+                            color: Theme.of(context).colorScheme.error,
+                          ),
                     ),
                   ),
                 ],
@@ -139,9 +158,13 @@ Widget buildDetailCard(BuildContext context, PartItem partItem) {
               child: Row(
                 children: [
                   const SizedBox(height: 22),
-                  Expanded(child: buildTextField('Rate', prefixIcon: Symbols.asterisk)),
+                  Expanded(
+                      child:
+                          buildTextField('Rate', prefixIcon: Symbols.asterisk)),
                   const SizedBox(width: 16),
-                  Expanded(child: buildTextField('Quantity', prefixIcon: Symbols.asterisk)),
+                  Expanded(
+                      child: buildTextField('Quantity',
+                          prefixIcon: Symbols.asterisk)),
                 ],
               ),
             ),
@@ -159,7 +182,8 @@ Widget buildDetailCard(BuildContext context, PartItem partItem) {
             const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: buildTextField('Delivery Date', prefixIcon: Symbols.calendar_month),
+              child: buildTextField('Delivery Date',
+                  prefixIcon: Symbols.calendar_month),
             ),
             const SizedBox(height: 16),
             Padding(
@@ -169,7 +193,7 @@ Widget buildDetailCard(BuildContext context, PartItem partItem) {
             SizedBox(height: 24),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: buildMediaAttachments(context),
+              child: buildMediaAttachments(context, selectedFiles, onPickFiles),
             ),
             const SizedBox(height: 16),
           ],
@@ -179,7 +203,7 @@ Widget buildDetailCard(BuildContext context, PartItem partItem) {
   );
 }
 
-Widget buildMediaAttachments(BuildContext context) {
+Widget buildMediaAttachments(BuildContext context, List<PlatformFile> selectedFiles,Future<void> Function() onAddFile) {
   return DottedBorder(
     color: const Color(0xFFA1A1A1),
     borderType: BorderType.RRect,
@@ -199,19 +223,19 @@ Widget buildMediaAttachments(BuildContext context) {
                 Text(
                   'Attachments',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
                 const Spacer(),
                 GestureDetector(
-                  onTap: () {},
-                  child: const Icon(Symbols.description,size: 20),
+                  onTap: onAddFile,
+                  child: const Icon(Symbols.description, size: 20),
                 ),
                 const SizedBox(width: 12),
                 GestureDetector(
                   onTap: () {},
-                  child: const Icon(Symbols.mic,size: 20),
+                  child: const Icon(Symbols.mic, size: 20),
                 ),
                 const SizedBox(
                   height: 24,
@@ -224,12 +248,12 @@ Widget buildMediaAttachments(BuildContext context) {
                 const SizedBox(width: 12),
                 GestureDetector(
                   onTap: () {},
-                  child: const Icon(Symbols.video_library,size: 20),
+                  child: const Icon(Symbols.video_library, size: 20),
                 ),
                 const SizedBox(width: 12),
                 GestureDetector(
                   onTap: () {},
-                  child: const Icon(Symbols.video_camera_back_add,size: 20),
+                  child: const Icon(Symbols.video_camera_back_add, size: 20),
                 ),
                 const SizedBox(
                   height: 24,
@@ -242,12 +266,12 @@ Widget buildMediaAttachments(BuildContext context) {
                 const SizedBox(width: 12),
                 GestureDetector(
                   onTap: () {},
-                  child: const Icon(Symbols.photo_library,size: 20),
+                  child: const Icon(Symbols.photo_library, size: 20),
                 ),
                 const SizedBox(width: 12),
                 GestureDetector(
                   onTap: () {},
-                  child: const Icon(Symbols.photo_camera,size: 20),
+                  child: const Icon(Symbols.photo_camera, size: 20),
                 ),
               ],
             ),
@@ -265,8 +289,8 @@ Widget buildMediaAttachments(BuildContext context) {
                 Text(
                   'You Can Upload up to 10 files of the following types: Image, Video, Audio, PDF Excel, and Docx. Each file must be 5MB or less',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontSize: 10,
-                  ),
+                        fontSize: 10,
+                      ),
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -298,13 +322,12 @@ Widget buildTextField(String label, {IconData? prefixIcon}) {
           ),
         ),
         prefixIcon: prefixIcon != null
-          ?Icon(
-          prefixIcon,
-          size: 20,
-        )
-        : null,
+            ? Icon(
+                prefixIcon,
+                size: 20,
+              )
+            : null,
       ),
     ),
   );
 }
-
