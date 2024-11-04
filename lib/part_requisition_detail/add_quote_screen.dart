@@ -3,7 +3,6 @@ import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:flutter_sound/flutter_sound.dart';
 import 'package:flutter/material.dart';
 
 class AddQuoteScreen extends StatefulWidget {
@@ -16,65 +15,48 @@ class AddQuoteScreen extends StatefulWidget {
 }
 
 class _AddQuoteScreenState extends State<AddQuoteScreen> {
-  final FlutterSoundRecorder _audioRecorder = FlutterSoundRecorder();
-  bool _isRecording = false;
-
-  void initState() {
-    super.initState();
-    _initRecorder();
-}
-
-Future<void> _initRecorder() async {
-    await _audioRecorder.openRecorder();
-}
-
-Future<void> _requestMicrophonePermission() async {
-    var status = await Permission.microphone.status;
-    if (status.isDenied) {
-      await Permission.microphone.request();
-    }
-}
-
-Future<void> _startRecording() async {
-    await _requestMicrophonePermission();
-
-    if (await Permission.microphone.isGranted) {
-      await _audioRecorder.startRecorder(
-        toFile: 'audio_record.aac', // file save recording
-      );
-      setState(() {
-        _isRecording = true;
-      });
-    }
-}
-
-Future<void> _stopRecording() async {
-    await _audioRecorder.stopRecorder();
-    setState(() {
-      _isRecording = false;
-    });
-}
-
-void dispose() {
-    _audioRecorder.closeRecorder();
-    super.dispose();
-}
-
   List<PlatformFile> selectedFiles = [];
-  Future<void> _pickFiles() async {
-    final result = await FilePicker.platform.pickFiles(
-      allowMultiple: true,
-      allowedExtensions: ['jpg', 'pdf', 'doc', 'mp4', 'mp3'],
-      type: FileType.custom,
-    );
 
-    if (result != null) {
-      setState(() {
-        selectedFiles = result.files;
-      });
-      print("Files uploaded successfully: ${result.files.map((file) => file.name).join(', ')}");
+  Future<void> _pickFiles() async {
+    var status = await Permission.storage.status;
+    if (status.isGranted) {
+      try {
+        final result = await FilePicker.platform.pickFiles(
+          allowMultiple: true,
+          allowedExtensions: ['jpg', 'pdf', 'doc', 'mp4', 'mp3'],
+          type: FileType.custom,
+        );
+        if (result != null) {
+          setState(() {
+            selectedFiles = result.files;
+          });
+          print("Files uploaded successfully: ${result.files.map((file) => file.name).join(', ')}");
+        }
+      } catch (e) {
+        print("Error picking files: $e");
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Failed to pick files")),
+        );
+      }
+    } else if (status.isDenied) {
+      // Request permission if it was denied
+      final result = await Permission.storage.request();
+      if (result.isGranted) {
+        // Retry picking files if permission is granted
+        _pickFiles();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Failed to pick files")),
+        );
+      }
+    } else {
+      // Handle other permission states (like permanently denied)
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Storage permission denied")),
+      );
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +145,12 @@ void dispose() {
   }
 }
 
-Widget buildDetailCard(BuildContext context, PartItem partItem,List<PlatformFile> selectedFiles, Future<void> Function() onPickFiles) {
+Widget buildDetailCard(
+    BuildContext context,
+    PartItem partItem,
+    List<PlatformFile> selectedFiles,
+    Future<void> Function() onPickFiles
+    ) {
   return Column(
     children: partItem.buyingChoice.map((choice) {
       return Card(
@@ -234,7 +221,7 @@ Widget buildDetailCard(BuildContext context, PartItem partItem,List<PlatformFile
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: buildTextField('Notes'),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: buildMediaAttachments(context, selectedFiles, onPickFiles),
@@ -247,7 +234,11 @@ Widget buildDetailCard(BuildContext context, PartItem partItem,List<PlatformFile
   );
 }
 
-Widget buildMediaAttachments(BuildContext context, List<PlatformFile> selectedFiles,Future<void> Function() onAddFile) {
+Widget buildMediaAttachments(
+    BuildContext context,
+    List<PlatformFile> selectedFiles,
+    Future<void> Function() onAddFile,
+    ) {
   return DottedBorder(
     color: const Color(0xFFA1A1A1),
     borderType: BorderType.RRect,
@@ -278,8 +269,8 @@ Widget buildMediaAttachments(BuildContext context, List<PlatformFile> selectedFi
                 ),
                 const SizedBox(width: 12),
                 GestureDetector(
-                  onTap: _isRecording ? _stopRecording : _startRecording,
-                  child: const Icon(  _isRecording ? Icons.mic_off : Symbols.mic, size: 20, color: _isRecording ? Colors.red : Colors.black),
+                  onTap: () {},
+                  child: const Icon(Symbols.mic, size: 20),
                 ),
                 const SizedBox(
                   height: 24,
@@ -376,3 +367,20 @@ Widget buildTextField(String label, {IconData? prefixIcon}) {
   );
 }
 
+/*
+
+  Future<void> _pickFiles() async {
+    final result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      allowedExtensions: ['jpg', 'pdf', 'doc', 'mp4', 'mp3'],
+      type: FileType.custom,
+    );
+
+    if (result != null) {
+      setState(() {
+        selectedFiles = result.files;
+      });
+      print("Files uploaded successfully: ${result.files.map((file) => file.name).join(', ')}");
+    }
+  }
+ */
