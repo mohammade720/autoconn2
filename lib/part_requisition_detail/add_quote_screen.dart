@@ -28,8 +28,8 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
       setState(() {
         selectedFiles = result.files;
       });
+      print("Files uploaded successfully: ${result.files.map((file) => file.name).join(', ')}");
     }
-
   }
 
   @override
