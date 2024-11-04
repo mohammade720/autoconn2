@@ -2,6 +2,8 @@ import 'package:autoconn2/partitem/part_item_model.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_sound/flutter_sound.dart';
 import 'package:flutter/material.dart';
 
 class AddQuoteScreen extends StatefulWidget {
@@ -14,9 +16,51 @@ class AddQuoteScreen extends StatefulWidget {
 }
 
 class _AddQuoteScreenState extends State<AddQuoteScreen> {
+  final FlutterSoundRecorder _audioRecorder = FlutterSoundRecorder();
+  bool _isRecording = false;
+
+  void initState() {
+    super.initState();
+    _initRecorder();
+}
+
+Future<void> _initRecorder() async {
+    await _audioRecorder.openRecorder();
+}
+
+Future<void> _requestMicrophonePermission() async {
+    var status = await Permission.microphone.status;
+    if (status.isDenied) {
+      await Permission.microphone.request();
+    }
+}
+
+Future<void> _startRecording() async {
+    await _requestMicrophonePermission();
+
+    if (await Permission.microphone.isGranted) {
+      await _audioRecorder.startRecorder(
+        toFile: 'audio_record.aac', // file save recording
+      );
+      setState(() {
+        _isRecording = true;
+      });
+    }
+}
+
+Future<void> _stopRecording() async {
+    await _audioRecorder.stopRecorder();
+    setState(() {
+      _isRecording = false;
+    });
+}
+
+void dispose() {
+    _audioRecorder.closeRecorder();
+    super.dispose();
+}
+
   List<PlatformFile> selectedFiles = [];
-
-
   Future<void> _pickFiles() async {
     final result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
@@ -234,8 +278,8 @@ Widget buildMediaAttachments(BuildContext context, List<PlatformFile> selectedFi
                 ),
                 const SizedBox(width: 12),
                 GestureDetector(
-                  onTap: () {},
-                  child: const Icon(Symbols.mic, size: 20),
+                  onTap: _isRecording ? _stopRecording : _startRecording,
+                  child: const Icon(  _isRecording ? Icons.mic_off : Symbols.mic, size: 20, color: _isRecording ? Colors.red : Colors.black),
                 ),
                 const SizedBox(
                   height: 24,
@@ -331,3 +375,4 @@ Widget buildTextField(String label, {IconData? prefixIcon}) {
     ),
   );
 }
+
