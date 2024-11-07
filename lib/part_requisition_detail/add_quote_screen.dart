@@ -188,7 +188,166 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
       }).toList(),
     );
   }
-  
+
+  // Widget buildMediaAttachments(
+  //     BuildContext context, List<PlatformFile> selectedFiles) {
+  //   return DottedBorder(
+  //     color: const Color(0xFFA1A1A1),
+  //     borderType: BorderType.RRect,
+  //     dashPattern: const [6, 3],
+  //     radius: const Radius.circular(4),
+  //     strokeWidth: 1,
+  //     child: Container(
+  //       height: 142, //selectedFiles.length * 64,
+  //       child: Column(
+  //         children: [
+  //           const SizedBox(height: 16),
+  //           Padding(
+  //             padding: const EdgeInsets.symmetric(horizontal: 16),
+  //             child: Row(
+  //               children: [
+  //                 Text(
+  //                   'Attachments',
+  //                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
+  //                         fontSize: 12,
+  //                         fontWeight: FontWeight.bold,
+  //                       ),
+  //                 ),
+  //                 const Spacer(),
+  //                 GestureDetector(
+  //                   onTap: () => pickFiles(context),
+  //                   child: const Icon(Symbols.description, size: 20),
+  //                 ),
+  //                 const SizedBox(width: 12),
+  //                 GestureDetector(
+  //                   onTap: () {},
+  //                   child: const Icon(Symbols.mic, size: 20),
+  //                 ),
+  //                 const SizedBox(
+  //                   height: 24,
+  //                   child: VerticalDivider(
+  //                     width: 12,
+  //                     thickness: 1.5,
+  //                     color: Color(0xFFA1A1A1),
+  //                   ),
+  //                 ),
+  //                 const SizedBox(width: 12),
+  //                 GestureDetector(
+  //                   onTap: () {},
+  //                   child: const Icon(Symbols.video_library, size: 20),
+  //                 ),
+  //                 const SizedBox(width: 12),
+  //                 GestureDetector(
+  //                   onTap: () {},
+  //                   child: const Icon(Symbols.video_camera_back_add, size: 20),
+  //                 ),
+  //                 const SizedBox(
+  //                   height: 24,
+  //                   child: VerticalDivider(
+  //                     width: 11,
+  //                     thickness: 1.5,
+  //                     color: Color(0xFFA1A1A1),
+  //                   ),
+  //                 ),
+  //                 const SizedBox(width: 12),
+  //                 GestureDetector(
+  //                   onTap: () {},
+  //                   child: const Icon(Symbols.photo_library, size: 20),
+  //                 ),
+  //                 const SizedBox(width: 12),
+  //                 GestureDetector(
+  //                   onTap: () {},
+  //                   child: const Icon(Symbols.photo_camera, size: 20),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //           const SizedBox(height: 28),
+  //           selectedFiles.isEmpty
+  //               ? Padding(
+  //                   padding: const EdgeInsets.symmetric(horizontal: 65),
+  //                   child: Column(
+  //                     children: [
+  //                       Text(
+  //                         'Photo, Videos, And Documents',
+  //                         style: Theme.of(context).textTheme.titleSmall,
+  //                       ),
+  //                       const SizedBox(height: 2),
+  //                       Text(
+  //                         'You Can Upload up to 10 files of the following types: Image, Video, Audio, PDF Excel, and Docx. Each file must be 5MB or less',
+  //                         style:
+  //                             Theme.of(context).textTheme.bodyLarge?.copyWith(
+  //                                   fontSize: 10,
+  //                                 ),
+  //                         textAlign: TextAlign.center,
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 )
+  //               : Expanded(
+  //                   child: GridView.builder(
+  //                     itemCount: selectedFiles.length,
+  //                     //physics: NeverScrollableScrollPhysics(),
+  //                     gridDelegate:
+  //                         const SliverGridDelegateWithFixedCrossAxisCount(
+  //                       crossAxisCount: 3, // Number of columns in the grid
+  //                       crossAxisSpacing: 8,
+  //                       mainAxisSpacing: 8,
+  //                       childAspectRatio: 1, // Aspect ratio for square items
+  //                     ),
+  //                     itemBuilder: (context, index) {
+  //                       final file = selectedFiles[index];
+  //                       return GestureDetector(
+  //                         onTap: () => viewFile(file),
+  //                         child: Container(
+  //                           decoration: BoxDecoration(
+  //                             border: Border.all(color: Colors.grey),
+  //                           ),
+  //                           child: Stack(
+  //                             children: [
+  //                               if (file.path != null)
+  //                                 Image.file(
+  //                                   File(file.path!),
+  //                                   fit: BoxFit.cover,
+  //                                   width: double.infinity,
+  //                                   height: double.infinity,
+  //                                 )
+  //                               else
+  //                                 const Icon(
+  //                                   Icons.insert_drive_file,
+  //                                   size: 50,
+  //                                 ),
+  //                               Positioned(
+  //                                 top: 4,
+  //                                 right: 4,
+  //                                 child: GestureDetector(
+  //                                   onTap: () => removeFile(index),
+  //                                   child: Container(
+  //                                     decoration: BoxDecoration(
+  //                                       color: Colors.grey.withOpacity(0.7),
+  //                                       shape: BoxShape.circle,
+  //                                     ),
+  //                                     child: const Icon(
+  //                                       Icons.close,
+  //                                       color: Colors.white,
+  //                                       size: 20,
+  //                                     ),
+  //                                   ),
+  //                                 ),
+  //                               ),
+  //                             ],
+  //                           ),
+  //                         ),
+  //                       );
+  //                     },
+  //                   ),
+  //                 )
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+
   Widget buildMediaAttachments(
       BuildContext context, List<PlatformFile> selectedFiles) {
     return DottedBorder(
@@ -197,125 +356,173 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
       dashPattern: const [6, 3],
       radius: const Radius.circular(4),
       strokeWidth: 1,
-      child: Container(
-        height: 142,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start, // Align the children to start
           children: [
+            Row(
+              children: [
+                Text(
+                  'Attachments',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const Spacer(),
+                GestureDetector(
+                  onTap: () => pickFiles(context),
+                  child: const Icon(Icons.description, size: 20),
+                ),
+                const SizedBox(width: 12),
+                GestureDetector(
+                  onTap: () {},
+                  child: const Icon(Icons.mic, size: 20),
+                ),
+                const SizedBox(
+                  height: 24,
+                  child: VerticalDivider(
+                    width: 12,
+                    thickness: 1.5,
+                    color: Color(0xFFA1A1A1),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                GestureDetector(
+                  onTap: () {},
+                  child: const Icon(Icons.video_library, size: 20),
+                ),
+                const SizedBox(width: 12),
+                GestureDetector(
+                  onTap: () {},
+                  child: const Icon(Icons.video_camera_back, size: 20),
+                ),
+                const SizedBox(
+                  height: 24,
+                  child: VerticalDivider(
+                    width: 11,
+                    thickness: 1.5,
+                    color: Color(0xFFA1A1A1),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                GestureDetector(
+                  onTap: () {},
+                  child: const Icon(Icons.photo_library, size: 20),
+                ),
+                const SizedBox(width: 12),
+                GestureDetector(
+                  onTap: () {},
+                  child: const Icon(Icons.photo_camera, size: 20),
+                ),
+              ],
+            ),
             const SizedBox(height: 16),
+            // Always visible text, even when files are selected
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
                 children: [
                   Text(
-                    'Attachments',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    'Photo, Videos, And Documents',
+                    style: Theme.of(context).textTheme.titleSmall,
                   ),
-                  const Spacer(),
-                  GestureDetector(
-                    onTap: () => pickFiles(context),
-                    child: const Icon(Symbols.description, size: 20),
-                  ),
-                  const SizedBox(width: 12),
-                  GestureDetector(
-                    onTap: () {},
-                    child: const Icon(Symbols.mic, size: 20),
-                  ),
-                  const SizedBox(
-                    height: 24,
-                    child: VerticalDivider(
-                      width: 12,
-                      thickness: 1.5,
-                      color: Color(0xFFA1A1A1),
+                  const SizedBox(height: 4),
+                  Text(
+                    'You can upload up to 10 files of the following types: Image, Video, Audio, PDF, Excel, and Docx. Each file must be 5MB or less.',
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontSize: 10,
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  GestureDetector(
-                    onTap: () {},
-                    child: const Icon(Symbols.video_library, size: 20),
-                  ),
-                  const SizedBox(width: 12),
-                  GestureDetector(
-                    onTap: () {},
-                    child: const Icon(Symbols.video_camera_back_add, size: 20),
-                  ),
-                  const SizedBox(
-                    height: 24,
-                    child: VerticalDivider(
-                      width: 11,
-                      thickness: 1.5,
-                      color: Color(0xFFA1A1A1),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  GestureDetector(
-                    onTap: () {},
-                    child: const Icon(Symbols.photo_library, size: 20),
-                  ),
-                  const SizedBox(width: 12),
-                  GestureDetector(
-                    onTap: () {},
-                    child: const Icon(Symbols.photo_camera, size: 20),
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 28),
-            selectedFiles.isEmpty
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 65),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Photo, Videos, And Documents',
-                          style: Theme.of(context).textTheme.titleSmall,
+            const SizedBox(height: 16),
+            if (selectedFiles.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Text(
+                  'Selected Files',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            const SizedBox(height: 16),
+            // Show selected files in a grid if any
+            if (selectedFiles.isNotEmpty)
+              SizedBox(
+                height: 200, // Set the height based on your design needs
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: selectedFiles.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                    childAspectRatio: 1,
+                  ),
+                  itemBuilder: (context, index) {
+                    final file = selectedFiles[index];
+                    return GestureDetector(
+                      onTap: () => viewFile(file),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
                         ),
-                        const SizedBox(height: 2),
-                        Text(
-                          'You Can Upload up to 10 files of the following types: Image, Video, Audio, PDF Excel, and Docx. Each file must be 5MB or less',
-                          style:
-                              Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    fontSize: 10,
+                        child: Stack(
+                          children: [
+                            if (file.path != null)
+                              Image.file(
+                                File(file.path!),
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: double.infinity,
+                              )
+                            else
+                              const Icon(
+                                Icons.insert_drive_file,
+                                size: 50,
+                              ),
+                            Positioned(
+                              top: 4,
+                              right: 4,
+                              child: GestureDetector(
+                                onTap: () => removeFile(index),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.red.withOpacity(0.7),
+                                    shape: BoxShape.circle,
                                   ),
-                          textAlign: TextAlign.center,
+                                  child: const Icon(
+                                    Icons.close,
+                                    color: Colors.white,
+                                    size: 18,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  )
-                : Expanded(
-                    child: GridView.builder(
-                      itemCount: selectedFiles.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3, // Number of columns in the grid
-                        crossAxisSpacing: 8,
-                        mainAxisSpacing: 8,
-                        childAspectRatio: 1, // Aspect ratio for square items
                       ),
-                      itemBuilder: (context, index) {
-                        final file = selectedFiles[index];
-                        return Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                          ),
-                          child: file.path != null
-                              ? Image.file(
-                                  File(file.path!),
-                                  // Display file preview if path is not null
-                                  fit: BoxFit.cover,
-                                )
-                              : const Icon(Icons
-                                  .insert_drive_file), // Placeholder for files without preview
-                        );
-                      },
-                    ),
-                  )
+                    );
+                  },
+                ),
+              ),
           ],
         ),
       ),
     );
+  }
+
+  void removeFile(int index) {
+    setState(() {
+      selectedFiles.removeAt(index);
+    });
   }
 
   void pickFiles(BuildContext context) async {
