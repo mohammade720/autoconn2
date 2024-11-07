@@ -216,12 +216,12 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
   //                 const Spacer(),
   //                 GestureDetector(
   //                   onTap: () => pickFiles(context),
-  //                   child: const Icon(Symbols.description, size: 20),
+  //                   child: const Icon(Symbols.description, size: 20, color: Colors.black,),
   //                 ),
   //                 const SizedBox(width: 12),
   //                 GestureDetector(
   //                   onTap: () {},
-  //                   child: const Icon(Symbols.mic, size: 20),
+  //                   child: const Icon(Symbols.mic, size: 20, color: Colors.black),
   //                 ),
   //                 const SizedBox(
   //                   height: 24,
@@ -234,12 +234,12 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
   //                 const SizedBox(width: 12),
   //                 GestureDetector(
   //                   onTap: () {},
-  //                   child: const Icon(Symbols.video_library, size: 20),
+  //                   child: const Icon(Symbols.video_library, size: 20,color: Colors.black),
   //                 ),
   //                 const SizedBox(width: 12),
   //                 GestureDetector(
   //                   onTap: () {},
-  //                   child: const Icon(Symbols.video_camera_back_add, size: 20),
+  //                   child: const Icon(Symbols.video_camera_back_add, size: 20, color: Colors.black),
   //                 ),
   //                 const SizedBox(
   //                   height: 24,
@@ -252,12 +252,12 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
   //                 const SizedBox(width: 12),
   //                 GestureDetector(
   //                   onTap: () {},
-  //                   child: const Icon(Symbols.photo_library, size: 20),
+  //                   child: const Icon(Symbols.photo_library, size: 20, color: Colors.black),
   //                 ),
   //                 const SizedBox(width: 12),
   //                 GestureDetector(
   //                   onTap: () {},
-  //                   child: const Icon(Symbols.photo_camera, size: 20),
+  //                   child: const Icon(Symbols.photo_camera, size: 20, color: Colors.black),
   //                 ),
   //               ],
   //             ),
@@ -347,7 +347,6 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
   //     ),
   //   );
   // }
-
   Widget buildMediaAttachments(
       BuildContext context, List<PlatformFile> selectedFiles) {
     return DottedBorder(
@@ -356,10 +355,14 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
       dashPattern: const [6, 3],
       radius: const Radius.circular(4),
       strokeWidth: 1,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        constraints: BoxConstraints(
+          minHeight: 142,
+          maxHeight: selectedFiles.isEmpty ? 142 : 300, // Adjust max height if there are selected files
+        ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, // Align the children to start
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
@@ -373,12 +376,12 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
                 const Spacer(),
                 GestureDetector(
                   onTap: () => pickFiles(context),
-                  child: const Icon(Icons.description, size: 20),
+                  child: const Icon(Symbols.description, size: 20, color: Colors.black),
                 ),
                 const SizedBox(width: 12),
                 GestureDetector(
                   onTap: () {},
-                  child: const Icon(Icons.mic, size: 20),
+                  child: const Icon(Symbols.mic, size: 20, color: Colors.black),
                 ),
                 const SizedBox(
                   height: 24,
@@ -391,12 +394,12 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
                 const SizedBox(width: 12),
                 GestureDetector(
                   onTap: () {},
-                  child: const Icon(Icons.video_library, size: 20),
+                  child: const Icon(Symbols.video_library, size: 20, color: Colors.black),
                 ),
                 const SizedBox(width: 12),
                 GestureDetector(
                   onTap: () {},
-                  child: const Icon(Icons.video_camera_back, size: 20),
+                  child: const Icon(Symbols.video_camera_back_add, size: 20, color: Colors.black),
                 ),
                 const SizedBox(
                   height: 24,
@@ -409,56 +412,37 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
                 const SizedBox(width: 12),
                 GestureDetector(
                   onTap: () {},
-                  child: const Icon(Icons.photo_library, size: 20),
+                  child: const Icon(Symbols.photo_library, size: 20, color: Colors.black),
                 ),
                 const SizedBox(width: 12),
                 GestureDetector(
                   onTap: () {},
-                  child: const Icon(Icons.photo_camera, size: 20),
+                  child: const Icon(Symbols.photo_camera, size: 20, color: Colors.black),
                 ),
               ],
             ),
             const SizedBox(height: 16),
-            // Always visible text, even when files are selected
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
+            if (selectedFiles.isEmpty)
+              Column(
                 children: [
                   Text(
                     'Photo, Videos, And Documents',
                     style: Theme.of(context).textTheme.titleSmall,
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'You can upload up to 10 files of the following types: Image, Video, Audio, PDF, Excel, and Docx. Each file must be 5MB or less.',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontSize: 10,
-                    ),
+                    'You can upload up to 10 files of the following types: Image, Video, Audio, PDF, Excel, and Docx. Each file must be 5MB or less',
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 10),
                     textAlign: TextAlign.center,
                   ),
                 ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            if (selectedFiles.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Text(
-                  'Selected Files',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            const SizedBox(height: 16),
-            // Show selected files in a grid if any
-            if (selectedFiles.isNotEmpty)
-              SizedBox(
-                height: 200, // Set the height based on your design needs
+              )
+            else
+              Expanded(
                 child: GridView.builder(
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
+
+                  padding: const EdgeInsets.symmetric(vertical: 8),
                   itemCount: selectedFiles.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
@@ -495,13 +479,13 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
                                 onTap: () => removeFile(index),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.red.withOpacity(0.7),
+                                    color: Colors.grey.withOpacity(0.7),
                                     shape: BoxShape.circle,
                                   ),
                                   child: const Icon(
                                     Icons.close,
                                     color: Colors.white,
-                                    size: 18,
+                                    size: 20,
                                   ),
                                 ),
                               ),
