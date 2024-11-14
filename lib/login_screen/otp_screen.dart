@@ -1,4 +1,3 @@
-import 'package:autoconn2/login_screen/tab_view/company_profile.dart';
 import 'package:autoconn2/login_screen/tab_view/tabview.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
@@ -14,8 +13,7 @@ class _MyOTPScreenState extends State<MyOTPScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-      ),
+      appBar: AppBar(),
       body: Center(
         child: Stack(
           children: [
@@ -77,7 +75,7 @@ class _MyOTPScreenState extends State<MyOTPScreen> {
                     },
                   ),
                   const SizedBox(height: 24),
-                   Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
@@ -102,31 +100,31 @@ class _MyOTPScreenState extends State<MyOTPScreen> {
                     child: RichText(
                       textAlign: TextAlign.center,
                       text: const TextSpan(
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.black,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: 'Don’t worry your data will not be shared with anyone. Please read our ',
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.black,
                           ),
-                          TextSpan(
-                            text: 'Terms of Service',
-                            style: TextStyle(
-                              color: Color(0xFFEAB308),
+                          children: [
+                            TextSpan(
+                              text:
+                                  'Don’t worry your data will not be shared with anyone. Please read our ',
                             ),
-                          ),
-                          TextSpan(
-                            text: ' and ',
-                          ),
-                          TextSpan(
-                            text: 'Privacy Policy',
-                            style: TextStyle(
-                              color: Color(0xFFEAB308),
+                            TextSpan(
+                              text: 'Terms of Service',
+                              style: TextStyle(
+                                color: Color(0xFFEAB308),
+                              ),
                             ),
-                          ),
-                        ]
-                      ),
+                            TextSpan(
+                              text: ' and ',
+                            ),
+                            TextSpan(
+                              text: 'Privacy Policy',
+                              style: TextStyle(
+                                color: Color(0xFFEAB308),
+                              ),
+                            ),
+                          ]),
                     ),
                   ),
                   const SizedBox(height: 36),
@@ -139,7 +137,8 @@ class _MyOTPScreenState extends State<MyOTPScreen> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => MyTabView()),
+                            MaterialPageRoute(
+                                builder: (context) => MyTabView()),
                           );
                         },
                         style: ElevatedButton.styleFrom(
