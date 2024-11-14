@@ -189,164 +189,6 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
     );
   }
 
-  // Widget buildMediaAttachments(
-  //     BuildContext context, List<PlatformFile> selectedFiles) {
-  //   return DottedBorder(
-  //     color: const Color(0xFFA1A1A1),
-  //     borderType: BorderType.RRect,
-  //     dashPattern: const [6, 3],
-  //     radius: const Radius.circular(4),
-  //     strokeWidth: 1,
-  //     child: Container(
-  //       height: 142, //selectedFiles.length * 64,
-  //       child: Column(
-  //         children: [
-  //           const SizedBox(height: 16),
-  //           Padding(
-  //             padding: const EdgeInsets.symmetric(horizontal: 16),
-  //             child: Row(
-  //               children: [
-  //                 Text(
-  //                   'Attachments',
-  //                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-  //                         fontSize: 12,
-  //                         fontWeight: FontWeight.bold,
-  //                       ),
-  //                 ),
-  //                 const Spacer(),
-  //                 GestureDetector(
-  //                   onTap: () => pickFiles(context),
-  //                   child: const Icon(Symbols.description, size: 20, color: Colors.black,),
-  //                 ),
-  //                 const SizedBox(width: 12),
-  //                 GestureDetector(
-  //                   onTap: () {},
-  //                   child: const Icon(Symbols.mic, size: 20, color: Colors.black),
-  //                 ),
-  //                 const SizedBox(
-  //                   height: 24,
-  //                   child: VerticalDivider(
-  //                     width: 12,
-  //                     thickness: 1.5,
-  //                     color: Color(0xFFA1A1A1),
-  //                   ),
-  //                 ),
-  //                 const SizedBox(width: 12),
-  //                 GestureDetector(
-  //                   onTap: () {},
-  //                   child: const Icon(Symbols.video_library, size: 20,color: Colors.black),
-  //                 ),
-  //                 const SizedBox(width: 12),
-  //                 GestureDetector(
-  //                   onTap: () {},
-  //                   child: const Icon(Symbols.video_camera_back_add, size: 20, color: Colors.black),
-  //                 ),
-  //                 const SizedBox(
-  //                   height: 24,
-  //                   child: VerticalDivider(
-  //                     width: 11,
-  //                     thickness: 1.5,
-  //                     color: Color(0xFFA1A1A1),
-  //                   ),
-  //                 ),
-  //                 const SizedBox(width: 12),
-  //                 GestureDetector(
-  //                   onTap: () {},
-  //                   child: const Icon(Symbols.photo_library, size: 20, color: Colors.black),
-  //                 ),
-  //                 const SizedBox(width: 12),
-  //                 GestureDetector(
-  //                   onTap: () {},
-  //                   child: const Icon(Symbols.photo_camera, size: 20, color: Colors.black),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //           const SizedBox(height: 28),
-  //           selectedFiles.isEmpty
-  //               ? Padding(
-  //                   padding: const EdgeInsets.symmetric(horizontal: 65),
-  //                   child: Column(
-  //                     children: [
-  //                       Text(
-  //                         'Photo, Videos, And Documents',
-  //                         style: Theme.of(context).textTheme.titleSmall,
-  //                       ),
-  //                       const SizedBox(height: 2),
-  //                       Text(
-  //                         'You Can Upload up to 10 files of the following types: Image, Video, Audio, PDF Excel, and Docx. Each file must be 5MB or less',
-  //                         style:
-  //                             Theme.of(context).textTheme.bodyLarge?.copyWith(
-  //                                   fontSize: 10,
-  //                                 ),
-  //                         textAlign: TextAlign.center,
-  //                       ),
-  //                     ],
-  //                   ),
-  //                 )
-  //               : Expanded(
-  //                   child: GridView.builder(
-  //                     itemCount: selectedFiles.length,
-  //                     //physics: NeverScrollableScrollPhysics(),
-  //                     gridDelegate:
-  //                         const SliverGridDelegateWithFixedCrossAxisCount(
-  //                       crossAxisCount: 3, // Number of columns in the grid
-  //                       crossAxisSpacing: 8,
-  //                       mainAxisSpacing: 8,
-  //                       childAspectRatio: 1, // Aspect ratio for square items
-  //                     ),
-  //                     itemBuilder: (context, index) {
-  //                       final file = selectedFiles[index];
-  //                       return GestureDetector(
-  //                         onTap: () => viewFile(file),
-  //                         child: Container(
-  //                           decoration: BoxDecoration(
-  //                             border: Border.all(color: Colors.grey),
-  //                           ),
-  //                           child: Stack(
-  //                             children: [
-  //                               if (file.path != null)
-  //                                 Image.file(
-  //                                   File(file.path!),
-  //                                   fit: BoxFit.cover,
-  //                                   width: double.infinity,
-  //                                   height: double.infinity,
-  //                                 )
-  //                               else
-  //                                 const Icon(
-  //                                   Icons.insert_drive_file,
-  //                                   size: 50,
-  //                                 ),
-  //                               Positioned(
-  //                                 top: 4,
-  //                                 right: 4,
-  //                                 child: GestureDetector(
-  //                                   onTap: () => removeFile(index),
-  //                                   child: Container(
-  //                                     decoration: BoxDecoration(
-  //                                       color: Colors.grey.withOpacity(0.7),
-  //                                       shape: BoxShape.circle,
-  //                                     ),
-  //                                     child: const Icon(
-  //                                       Icons.close,
-  //                                       color: Colors.white,
-  //                                       size: 20,
-  //                                     ),
-  //                                   ),
-  //                                 ),
-  //                               ),
-  //                             ],
-  //                           ),
-  //                         ),
-  //                       );
-  //                     },
-  //                   ),
-  //                 )
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
   Widget buildMediaAttachments(
       BuildContext context, List<PlatformFile> selectedFiles) {
     return DottedBorder(
@@ -359,7 +201,7 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
         padding: const EdgeInsets.all(16),
         constraints: BoxConstraints(
           minHeight: 142,
-          maxHeight: selectedFiles.isEmpty ? 142 : 300, // Adjust max height if there are selected files
+          maxHeight: selectedFiles.isEmpty ? 142 : 300,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -441,7 +283,6 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
             else
               Expanded(
                 child: GridView.builder(
-
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   itemCount: selectedFiles.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
