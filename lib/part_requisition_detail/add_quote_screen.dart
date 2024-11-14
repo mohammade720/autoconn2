@@ -4,6 +4,8 @@ import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:open_file/open_file.dart';
+import 'package:record/record.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 
 class AddQuoteScreen extends StatefulWidget {
@@ -17,6 +19,11 @@ class AddQuoteScreen extends StatefulWidget {
 
 class _AddQuoteScreenState extends State<AddQuoteScreen> {
   List<PlatformFile> selectedFiles = [];
+  final record = AudioRecorder()  ;
+
+  bool isRecording = false;
+  String? audioFilePath;
+
 
   @override
   Widget build(BuildContext context) {
@@ -222,8 +229,8 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
                 ),
                 const SizedBox(width: 12),
                 GestureDetector(
-                  onTap: () {},
-                  child: const Icon(Symbols.mic, size: 20, color: Colors.black),
+                  onTap: () => toggleRecording(),
+                  child: Icon(isRecording? Symbols.stop : Symbols.mic, size: 20, color: Colors.black),
                 ),
                 const SizedBox(
                   height: 24,
@@ -366,6 +373,23 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
     OpenFile.open(file.path);
   }
 
+
+  Future<void> toggleRecording() async {
+    if (isRecording) {
+      await record.stop();
+      setState(() {
+        isRecording = false;
+      });
+    } else {
+      final appDocDir = await getApplicationDocumentsDirectory();
+      audioFilePath = '${appDocDir.path}/audio_recording.m4a';
+      await record.start(audioFilePath! as RecordConfig,path: '');
+      setState(() {
+        isRecording = true;
+      });
+    }
+  }
+
   Widget buildTextField(String label, {IconData? prefixIcon}) {
     return SizedBox(
       height: 36,
@@ -396,3 +420,4 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
     );
   }
 }
+
