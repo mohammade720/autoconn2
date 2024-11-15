@@ -4,8 +4,8 @@ import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 
 class AddQuoteScreen extends StatefulWidget {
@@ -19,8 +19,7 @@ class AddQuoteScreen extends StatefulWidget {
 
 class _AddQuoteScreenState extends State<AddQuoteScreen> {
   List<PlatformFile> selectedFiles = [];
-
-  final AudioRecorder _audioRecorder = AudioRecorder();
+  final Record _audioRecorder = Record.instance;
   bool isRecording = false;
 
   @override
@@ -227,8 +226,8 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
                 ),
                 const SizedBox(width: 12),
                 GestureDetector(
-                  onTap: () => toggleRecording,
-                  child: const Icon(Symbols.mic, size: 20, color: Colors.black),
+                  onTap: toggleRecording,
+                  child:  Icon(isRecording ? Icons.stop : Symbols.mic, size: 20, color: Colors.black),
                 ),
                 const SizedBox(
                   height: 24,
@@ -349,6 +348,30 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
     );
   }
 
+  void toggleRecording() async {
+    if (isRecording) {
+      final path = await _audioRecorder.stop();
+      if (path != null) {
+        final fileSize = File(path).lengthSync();
+        setState(() {
+          selectedFiles.add(PlatformFile(
+              name: 'Recording',
+              path: path,
+              size:  fileSize,
+          ));
+         isRecording = false;
+        });
+      }
+    } else {
+      final tempDir = await getTemporaryDirectory();
+      final path = '${tempDir.path}/recording_${DateTime.now().microsecondsSinceEpoch}.m4a';
+      await _audioRecorder.start(path: path);
+      setState(() {
+        isRecording = true;
+      });
+    }
+  }
+
   void removeFile(int index) {
     setState(() {
       selectedFiles.removeAt(index);
@@ -371,38 +394,6 @@ class _AddQuoteScreenState extends State<AddQuoteScreen> {
     OpenFile.open(file.path);
   }
 
-  @override
-  void dispose() {
-    _audioRecorder.dispose();
-    super.dispose();
-  }
-
-  Future<void> toggleRecording() async {
-    if (isRecording) {
-      // Stop recording and save the file
-      String? path = await _audioRecorder.stop();
-      if (path != null) {
-        setState(() {
-          selectedFiles.add(PlatformFile(name: 'Audio Recording', path: path, size: File(path).lengthSync()));
-        });
-      }
-    } else {
-      // Start recording with a file path
-      bool hasPermission = await _audioRecorder.hasPermission();
-      if (hasPermission) {
-        // Get the application documents directory
-        final directory = await getApplicationDocumentsDirectory();
-        // Generate a unique file name using DateTime
-        String filePath = '${directory.path}/${DateTime.now().millisecondsSinceEpoch}.m4a';
-
-        // Correctly pass the filePath as a named parameter
-        await _audioRecorder.start(path: filePath);
-      }
-    }
-    setState(() {
-      isRecording = !isRecording;
-    });
-  }
 
 
   Widget buildTextField(String label, {IconData? prefixIcon}) {
